@@ -6,7 +6,7 @@ pipeline{
         stage('Install Node') {
             steps {
                 echo 'Installing Node'
-                sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-node.sh'
+           //     sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-node.sh'
             }
              post {
                 failure {
@@ -22,7 +22,7 @@ pipeline{
         stage('Install Graph Builder') {
             steps {
                 echo 'Installing GraphBuilder'
-                sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-graph-builder.sh $vTag'
+             //   sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-graph-builder.sh $vTag'
             }
             post {
                 failure {
@@ -38,7 +38,7 @@ pipeline{
         stage('Install 3D Editor') {
             steps {
                 echo 'Installing 3D Editor'
-                sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-3d-editor.sh $vTag'
+            //    sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-3d-editor.sh $vTag'
             }
             post {
                 failure {
@@ -54,7 +54,7 @@ pipeline{
         stage('Install Scheduler') {
             steps {
                 echo 'Installing Scheduler'
-                sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-scheduler-standalone.sh $vTag'
+            //    sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-scheduler-standalone.sh $vTag'
             }
             post {
                 failure {
@@ -70,7 +70,7 @@ pipeline{
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-             sh '/home/graphbuildertmp/ULAutomation.jenkins/install/deploy.sh $vTag'
+            // sh '/home/graphbuildertmp/ULAutomation.jenkins/install/deploy.sh $vTag'
             }
             post {
                 failure {
