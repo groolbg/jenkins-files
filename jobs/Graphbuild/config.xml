@@ -11,6 +11,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty/>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
@@ -25,7 +26,9 @@
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
-    <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty/>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers/>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.41">
     <script>pipeline{
@@ -36,7 +39,7 @@
         stage(&apos;Install Node&apos;) {
             steps {
                 echo &apos;Installing Node&apos;
-                sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-node.sh&apos;
+               // sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-node.sh&apos;
             }
              post {
                 failure {
