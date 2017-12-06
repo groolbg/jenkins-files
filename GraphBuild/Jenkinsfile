@@ -1,0 +1,111 @@
+pipeline{
+     agent{
+         label 'ULBuilder'
+     }
+ stages {
+        stage('Install Node') {
+            steps {
+                echo 'Installing Node'
+                sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-node.sh'
+            }
+             post {
+                failure {
+                    emailext( 
+                     body: '$DEFAULT_CONTENT',
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: '$DEFAULT_SUBJECT  $vTag',
+                     to: '$sendTo, $DEFAULT_RECIPIENTS')
+                }
+            }
+        }   
+        stage('Install Graph Builder') {
+            steps {
+                echo 'Installing GraphBuilder'
+                sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-graph-builder.sh $vTag'
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: '$DEFAULT_CONTENT',
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: '$DEFAULT_SUBJECT $vTag',
+                     to: '$sendTo, $DEFAULT_RECIPIENTS')
+                }
+            }
+        }
+        stage('Install 3D Editor') {
+            steps {
+                echo 'Installing 3D Editor'
+                sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-3d-editor.sh $vTag'
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: '$DEFAULT_CONTENT',
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: '$DEFAULT_SUBJECT $vTag',
+                     to: '$sendTo, $DEFAULT_RECIPIENTS')
+                }
+            }
+        } 
+        stage('Install Scheduler') {
+            steps {
+                echo 'Installing Scheduler'
+                sh '/home/graphbuildertmp/ULAutomation.jenkins/install/install-scheduler-standalone.sh $vTag'
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: '$DEFAULT_CONTENT',
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: '$DEFAULT_SUBJECT $vTag',
+                     to: '$sendTo, $DEFAULT_RECIPIENTS')
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying'
+             sh '/home/graphbuildertmp/ULAutomation.jenkins/install/deploy.sh $vTag'
+            }
+            post {
+                failure {
+                    emailext( 
+                    body: '$DEFAULT_CONTENT',
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: '$DEFAULT_SUBJECT $vTag',
+                     to: '$sendTo, $DEFAULT_RECIPIENTS')
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Checking website response code"
+               sh '/home/graphbuildertmp/ULAutomation.jenkins/install/test-graph-website.sh $vTag'    
+            }
+            post {
+                success {
+                    emailext( 
+                     body: '$DEFAULT_CONTENT',
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: '$DEFAULT_SUBJECT $vTag',
+                     to: '$sendTo')
+                }
+                failure {
+                    emailext( 
+                     body: '$DEFAULT_CONTENT',
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: '$DEFAULT_SUBJECT $vTag',
+                     to: '$sendTo, $DEFAULT_RECIPIENTS')
+                }
+            }
+        }
+    }
+ }
