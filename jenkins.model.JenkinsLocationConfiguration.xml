@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <jenkins.model.JenkinsLocationConfiguration>
-  <adminAddress>do-not-reply@ulautomation2017.abilixsoft.eu</adminAddress>
   <jenkinsUrl>https://ulautomation2017.abilixsoft.eu/</jenkinsUrl>
 </jenkins.model.JenkinsLocationConfiguration>

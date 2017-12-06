@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson.plugins.emailext.ExtendedEmailPublisherDescriptor plugin="email-ext@2.61">
   <smtpAuthUsername>automation@abilixsoft.eu</smtpAuthUsername>
-  <smtpAuthPassword>{AQAAABAAAAAQZNp23v5zmfQ6Mgr+QTGEeOLHdNI1av819u4N7Mdx6+g=}</smtpAuthPassword>
+  <smtpAuthPassword>{AQAAABAAAABA2d7ajexzPDw5sfQ7mpwBYV+TigOAR/MixcoYAJW0X2eKVu6BOOX/zY1E/vUE73qXljz3mdRL2qLtCEDCsZQmnlpz8IEwDbz3jtPzO8UHK3Y=}</smtpAuthPassword>
   <smtpHost>securemail201412.abilixsoft.eu</smtpHost>
   <useSsl>false</useSsl>
   <charset>UTF-8</charset>
