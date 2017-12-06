@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<user>
+  <fullName>ULautomat</fullName>
+  <description></description>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAw3isIWOT8G8fCSohA7eixzXhN9NTigb/uAW60+Z31HeNxpA+gzekBwfYC3+b/oZ1UaWscOkf8ngtAoblde4kHHg==}</apiToken>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>d.todorov@abilixsoft.eu</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <primaryViewName></primaryViewName>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>all</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.1.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.security.HudsonPrivateSecurityRealm_-Details>
+      <passwordHash>#jbcrypt:$2a$10$uokh3Y5A1Cu8sGbeX5CVMuUUGvKe6.jqezZmH.bewSRdAeVvk/cgq</passwordHash>
+    </hudson.security.HudsonPrivateSecurityRealm_-Details>
+    <org.jenkinsci.main.modules.cli.auth.ssh.UserPropertyImpl>
+      <authorizedKeys></authorizedKeys>
+    </org.jenkinsci.main.modules.cli.auth.ssh.UserPropertyImpl>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>true</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string>authenticated</string>
+      </roles>
+      <timestamp>1509710925504</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+  </properties>
+</user>

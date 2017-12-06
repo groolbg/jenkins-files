@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>ULBuilder</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <org.jenkinsci.plugins.gwt.GenericTrigger plugin="generic-webhook-trigger@1.20">
+      <spec></spec>
+      <genericVariables>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
+          <key>reponame</key>
+          <value>$.repository.name</value>
+          <regexpFilter></regexpFilter>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
+          <key>committer</key>
+          <value>$..committer</value>
+          <regexpFilter></regexpFilter>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+      </genericVariables>
+      <regexpFilterText>$reponame</regexpFilterText>
+      <regexpFilterExpression>^(3d-editor|graph-builder|scheduler-standalone)*?$</regexpFilterExpression>
+    </org.jenkinsci.plugins.gwt.GenericTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#git -C /home/graphbuildertmp/ULAutomation.jenkins/tmp/tmp/$reponame pull
+#cd /home/graphbuildertmp/ULAutomation.jenkins/tmp/tmp/$reponame
+#git pull
+bash /home/graphbuildertmp/ULAutomation.jenkins/install/detect_commit.sh $committer_1_email
+#bash /home/graphbuildertmp/ULAutomation.jenkins/tmp/testProj/detect_commit.sh $committer_1_email
+#echo $before
+#echo $after
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.61">
+      <recipientList>$DEFAULT_RECIPIENTS</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+          <email>
+            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <recipientProviders>
+              <hudson.plugins.emailext.plugins.recipients.ListRecipientProvider/>
+            </recipientProviders>
+            <attachmentsPattern></attachmentsPattern>
+            <attachBuildLog>true</attachBuildLog>
+            <compressBuildLog>true</compressBuildLog>
+            <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+            <contentType>project</contentType>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+      <defaultContent>$DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript>$DEFAULT_PRESEND_SCRIPT</presendScript>
+      <postsendScript>$DEFAULT_POSTSEND_SCRIPT</postsendScript>
+      <attachBuildLog>true</attachBuildLog>
+      <compressBuildLog>true</compressBuildLog>
+      <replyTo>$DEFAULT_REPLYTO</replyTo>
+      <saveOutput>false</saveOutput>
+      <disabled>false</disabled>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>

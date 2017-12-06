@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<scriptApproval plugin="script-security@1.35">
+  <approvedScriptHashes>
+    <string>006226ea2ae270a639b21b2bbc9a5d4e0f486a63</string>
+    <string>017d0db438428731cd600b6ebda805065433520f</string>
+    <string>02225c9e23bf591fdafca0fe501298342c34173e</string>
+    <string>09bd195125176787d46d3212258fc881bbc6b3aa</string>
+    <string>0cd055da6b7bea368d87005de0164f11a205a68e</string>
+    <string>0e97438db4f571a1143e25dfcb9b0425f2cade05</string>
+    <string>179648ad259b3f28480f86cdd8ac6b0360b480d9</string>
+    <string>1a44939ea1d24d8cd92624fa017b55d4179eae22</string>
+    <string>1ef39ec5a1eea40c715d6ac7b0046b4f8fc3693e</string>
+    <string>209a44c3e567e2fff1f0e61474da9f1571cded69</string>
+    <string>21bc8166ee7237d042419325b0f0a8dc0f7a2a0d</string>
+    <string>23f32c36528b375a0d1a11b76a2dd6d13cb0c220</string>
+    <string>2566ed83dbaf8cd9dc5ae0f970e9e13fcac014f0</string>
+    <string>25c713c443184045285ed8f7e8fa2902466eb0a7</string>
+    <string>29e5878f5c28e93333ae86cd61fa9ffae4673bb1</string>
+    <string>2d953a4110bf85eafeccd749121d219f1cbb7bac</string>
+    <string>3251e982615321d6e1db4cc977185e08808a9b76</string>
+    <string>3f8bc9f770ba3c0650c9a48ffddbc85fbc0b063f</string>
+    <string>44876a6d08fc98b3514ce0a033c9e274eb2221f6</string>
+    <string>561849703086205bf9666c34ce50c835e74c35e5</string>
+    <string>58cdcffa1f7c0f2877697cf7e6dc958371258c69</string>
+    <string>58da19b8562a88bb68923fc96e7af30f85f72e88</string>
+    <string>5da8a1923fdd55c269c3a35da8f4405b08d44348</string>
+    <string>6079bb53ddf49751628188cd013790cb17a07c61</string>
+    <string>684076d632c43f838c3e4d019ace3444512ddaf9</string>
+    <string>83e2128c878cac0f7e390a33ce678df8b3d7c10b</string>
+    <string>842ee46f9af3e96835262d6d2fac6885f5a6c85f</string>
+    <string>86e0933d310f815cd29fcce3592dfa9d453a998a</string>
+    <string>91574f3363dc98b4596b6ed9294af61a24362990</string>
+    <string>98b698e1e2c1250a6a4cb0676c935d1aada5576c</string>
+    <string>a3a269465c4cefac6a8486b00cc71688b6db85e4</string>
+    <string>af5f41a505afc9b57dcadfeab08fcef9ad7aaa7f</string>
+    <string>ccf10bfafdc028f0e67a0f35d917a528c8bacc05</string>
+    <string>ced35edd533baa74c99b2c2d4eb345e549976141</string>
+    <string>d7f170dc374e92f4f3ba9c931f167ef3da86c130</string>
+    <string>db5dee2ea618e8a42361743d8f9e7c342a7d776e</string>
+    <string>e2d2f76a69468b2e98dc4c4bf5c71e2375d0ecb8</string>
+    <string>e3a59bacc3b72dcbf94b364a84e094e45cd6e790</string>
+    <string>e51664d4f86a4f2fca7a689d5dacca6ac37f25c5</string>
+    <string>e69f6c361974cd2b33cda85919785527169d5794</string>
+    <string>e8ecacf903cd81a6c7d3e8328b1a74158ea63282</string>
+    <string>ebca18a31c2f4fc74a48e05a5a0985196af10317</string>
+    <string>ebed266e798365fd24da127695633a0ba582a52b</string>
+    <string>f12cf3c32ff81129a00845ec3313a33e2ff9673f</string>
+    <string>f48f9e884f1fd25935335c763851ccd6e520ba40</string>
+    <string>fc58384f239beb0002b1caca2b8879b7449fbbdd</string>
+    <string>fcf0975d274967d8fd7a541b44ff5155ce5f96ae</string>
+    <string>fea0a8e24a60579dc09608b769930ffd000f8b15</string>
+  </approvedScriptHashes>
+  <approvedSignatures/>
+  <aclApprovedSignatures/>
+  <approvedClasspathEntries/>
+  <pendingScripts>
+    <pendingScript>
+      <context/>
+      <script>pipeline{
+     agent{
+         label &apos;ULBuilder&apos;
+     }
+ stages {
+        stage(&apos;Install Annode&apos;) {
+            steps {
+                echo &apos;Installing Node&apos;
+             sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-node.sh&apos;
+            }
+             post {
+                success {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     subject: &apos;$DEFAULT_SUBJECT&apos;,
+                     to: &apos;$sendTo&apos;)
+                }
+            }
+        }   
+   /*     stage(&apos;Install Graph Builder&apos;) {
+            steps {
+                echo &apos;Installing GraphBuilder&apos;
+             sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-graph-builder.sh $vTag&apos;
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     subject: &apos;$DEFAULT_SUBJECT&apos;,
+                     to: &apos;$DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }
+        stage(&apos;Install 3D Editor&apos;) {
+            steps {
+                echo &apos;Installing 3D Editor&apos;
+             sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-3d-editor.sh $vTag&apos;
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     subject: &apos;$DEFAULT_SUBJECT&apos;,
+                     to: &apos;$DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        } 
+        stage(&apos;Install Scheduler&apos;) {
+            steps {
+                echo &apos;Installing Scheduler&apos;
+             sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-scheduler-standalone.sh $vTag&apos;
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     subject: &apos;$DEFAULT_SUBJECT&apos;,
+                     to: &apos;$DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }
+        stage(&apos;Deploy&apos;) {
+            steps {
+                echo &apos;Deploying&apos;
+             sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/deploy.sh $vTag&apos;
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     subject: &apos;$DEFAULT_SUBJECT&apos;,
+                     to: &apos;$DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }
+        stage(&apos;Test&apos;) {
+            steps {
+                echo &quot;Checking website response code&quot;
+            sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/test-graph-website.sh $vTag&apos;    
+            }
+            post {
+                success {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     subject: &apos;$DEFAULT_SUBJECT&apos;,
+                     to: &apos;$DEFAULT_RECIPIENTS&apos;)
+                }
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     subject: &apos;$DEFAULT_SUBJECT&apos;,
+                     to: &apos;$DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }*/
+    }
+ }
+</script>
+      <language>groovy</language>
+    </pendingScript>
+  </pendingScripts>
+  <pendingSignatures/>
+  <pendingClasspathEntries/>
+</scriptApproval>

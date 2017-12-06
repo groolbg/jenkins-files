@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.emailext.ExtendedEmailPublisherDescriptor plugin="email-ext@2.61">
+  <smtpAuthUsername>automation@abilixsoft.eu</smtpAuthUsername>
+  <smtpAuthPassword>{AQAAABAAAAAQZNp23v5zmfQ6Mgr+QTGEeOLHdNI1av819u4N7Mdx6+g=}</smtpAuthPassword>
+  <smtpHost>securemail201412.abilixsoft.eu</smtpHost>
+  <useSsl>false</useSsl>
+  <charset>UTF-8</charset>
+  <defaultContentType>text/plain</defaultContentType>
+  <defaultSubject>$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!</defaultSubject>
+  <defaultBody>$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:&#xd;
+This is an automated message. Please do not respond.</defaultBody>
+  <defaultPresendScript></defaultPresendScript>
+  <defaultPostsendScript></defaultPostsendScript>
+  <defaultClasspath/>
+  <defaultTriggerIds>
+    <string>hudson.plugins.emailext.plugins.trigger.FailureTrigger</string>
+  </defaultTriggerIds>
+  <maxAttachmentSize>12582912</maxAttachmentSize>
+  <recipientList>automation@abilixsoft.eu</recipientList>
+  <defaultReplyTo></defaultReplyTo>
+  <excludedCommitters></excludedCommitters>
+  <overrideGlobalSettings>true</overrideGlobalSettings>
+  <precedenceBulk>false</precedenceBulk>
+  <debugMode>false</debugMode>
+  <requireAdminForTemplateTesting>false</requireAdminForTemplateTesting>
+  <enableWatching>false</enableWatching>
+  <enableAllowUnregistered>false</enableAllowUnregistered>
+</hudson.plugins.emailext.ExtendedEmailPublisherDescriptor>

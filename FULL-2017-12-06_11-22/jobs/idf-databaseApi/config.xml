@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.15">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.2.5"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.2.5">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>vTag</name>
+          <description></description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>sendTo</name>
+          <description></description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty/>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.41">
+    <script>pipeline{
+     agent{
+         label &apos;idf-db-api&apos;
+     }
+ stages {
+        stage(&apos;Installing Local&apos;) {
+            steps {
+                echo &apos;Install Local&apos;
+             sh &apos;/home/idfdatabaseapi/ULAutomation.jenkins/install/install-local.sh $vTag&apos;
+            }
+             post {
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT $vTag&apos;,
+                     to: &apos;$sendTo, $DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }   
+        stage(&apos;Install Remote&apos;) {
+            steps {
+                echo &apos;Installing Remote&apos;
+             sh &apos;/home/idfdatabaseapi/ULAutomation.jenkins/install/install-remote.sh $vTag&apos;
+            }
+           post {
+               success {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT $vTag&apos;,
+                     to: &apos;$sendTo&apos;)
+                }
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT $vTag&apos;,
+                     to: &apos;$sendTo, $DEFAULT_RECIPIENTS&apos;)
+                }
+           }
+        }
+    }
+ }
+</script>
+    <sandbox>false</sandbox>
+  </definition>
+  <triggers/>
+  <authToken>tVvs2jm5vphP</authToken>
+  <disabled>false</disabled>
+</flow-definition>

@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.15">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.2.5"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.2.5">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>vTag</name>
+          <description></description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>sendTo</name>
+          <description></description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty/>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.41">
+    <script>pipeline{
+     agent{
+         label &apos;ULBuilder&apos;
+     }
+ stages {
+        stage(&apos;Install Node&apos;) {
+            steps {
+                echo &apos;Installing Node&apos;
+                sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-node.sh&apos;
+            }
+             post {
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT  $vTag&apos;,
+                     to: &apos;$sendTo, $DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }   
+        stage(&apos;Install Graph Builder&apos;) {
+            steps {
+                echo &apos;Installing GraphBuilder&apos;
+                sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-graph-builder.sh $vTag&apos;
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT $vTag&apos;,
+                     to: &apos;$sendTo, $DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }
+        stage(&apos;Install 3D Editor&apos;) {
+            steps {
+                echo &apos;Installing 3D Editor&apos;
+                sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-3d-editor.sh $vTag&apos;
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT $vTag&apos;,
+                     to: &apos;$sendTo, $DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        } 
+        stage(&apos;Install Scheduler&apos;) {
+            steps {
+                echo &apos;Installing Scheduler&apos;
+                sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/install-scheduler-standalone.sh $vTag&apos;
+            }
+            post {
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT $vTag&apos;,
+                     to: &apos;$sendTo, $DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }
+        stage(&apos;Deploy&apos;) {
+            steps {
+                echo &apos;Deploying&apos;
+             sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/deploy.sh $vTag&apos;
+            }
+            post {
+                failure {
+                    emailext( 
+                    body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT $vTag&apos;,
+                     to: &apos;$sendTo, $DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }
+        stage(&apos;Test&apos;) {
+            steps {
+                echo &quot;Checking website response code&quot;
+               sh &apos;/home/graphbuildertmp/ULAutomation.jenkins/install/test-graph-website.sh $vTag&apos;    
+            }
+            post {
+                success {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT $vTag&apos;,
+                     to: &apos;$sendTo&apos;)
+                }
+                failure {
+                    emailext( 
+                     body: &apos;$DEFAULT_CONTENT&apos;,
+                     attachLog: true, 
+                     compressLog: true, 
+                     subject: &apos;$DEFAULT_SUBJECT $vTag&apos;,
+                     to: &apos;$sendTo, $DEFAULT_RECIPIENTS&apos;)
+                }
+            }
+        }
+    }
+ }
+</script>
+    <sandbox>false</sandbox>
+  </definition>
+  <triggers/>
+  <authToken>UGg4VPdENF8eTVN5dtHn</authToken>
+  <disabled>false</disabled>
+</flow-definition>
